@@ -10,8 +10,6 @@
 
 @interface FeedView ()
 
-@property (nonatomic, strong) UILabel *titleLabel;
-
 @end
 
 @implementation FeedView
@@ -37,36 +35,28 @@
 }
 
 - (void)setup {
-    self.backgroundColor = [UIColor whiteColor];
-    [self setupTitleLabel];
+    [self setupCollectionView];
 }
 
-- (void)setupTitleLabel {
-    _titleLabel = [[UILabel alloc] init];
-    _titleLabel.textColor = [UIColor blackColor];
-    _titleLabel.translatesAutoresizingMaskIntoConstraints = false;
+- (void)setupCollectionView {
+    _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
+    _collectionView.backgroundColor = [UIColor whiteColor];
+    _collectionView.translatesAutoresizingMaskIntoConstraints = false;
 }
 
 - (void)setupLayer {
-    [self addSubview:_titleLabel];
+    [self addSubview:_collectionView];
 }
 
 - (void)setupConstraints {
-    [self setupTitleLabelConstraints];
+    [self setupCollectionViewConstraints];
 }
 
-- (void)setupTitleLabelConstraints {
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:_titleLabel attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0]];
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:_titleLabel attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0.0]];
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_titleLabel attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0]];
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_titleLabel attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0]];
-}
-
-
-// MARK: - Public
-
-- (void)setTitle:(NSString *)title {
-    self.titleLabel.text = title;
+- (void)setupCollectionViewConstraints {
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:_collectionView attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0]];
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:_collectionView attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0.0]];
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_collectionView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0]];
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_collectionView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0]];
 }
 
 @end

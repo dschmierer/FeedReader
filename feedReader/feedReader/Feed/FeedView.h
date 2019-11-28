@@ -16,6 +16,8 @@
 
 @interface FeedView : UIView
 
-- (void)setTitle:(NSString *)title;
+@property (nonatomic, readonly, strong) UICollectionView *collectionView;
+
+//- (void)setTitle:(NSString *)title;
 
 @end

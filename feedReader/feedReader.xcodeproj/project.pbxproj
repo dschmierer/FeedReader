@@ -13,6 +13,7 @@
 		08762252238F4F71002EF852 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08762250238F4F71002EF852 /* LaunchScreen.storyboard */; };
 		08762255238F4F71002EF852 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 08762254238F4F71002EF852 /* main.m */; };
 		0876225C238F5186002EF852 /* FeedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0876225B238F5186002EF852 /* FeedView.m */; };
+		08762264238FAE12002EF852 /* FeedItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08762263238FAE12002EF852 /* FeedItemCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,8 @@
 		08762254238F4F71002EF852 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		0876225B238F5186002EF852 /* FeedView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FeedView.m; sourceTree = "<group>"; };
 		0876225D238F5260002EF852 /* FeedView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FeedView.h; sourceTree = "<group>"; };
+		08762262238FADB0002EF852 /* FeedItemCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FeedItemCell.h; sourceTree = "<group>"; };
+		08762263238FAE12002EF852 /* FeedItemCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FeedItemCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +80,8 @@
 				08762249238F4F6D002EF852 /* FeedViewController.m */,
 				0876225D238F5260002EF852 /* FeedView.h */,
 				0876225B238F5186002EF852 /* FeedView.m */,
+				08762262238FADB0002EF852 /* FeedItemCell.h */,
+				08762263238FAE12002EF852 /* FeedItemCell.m */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -153,6 +158,7 @@
 				0876224A238F4F6D002EF852 /* FeedViewController.m in Sources */,
 				0876225C238F5186002EF852 /* FeedView.m in Sources */,
 				08762244238F4F6D002EF852 /* AppDelegate.m in Sources */,
+				08762264238FAE12002EF852 /* FeedItemCell.m in Sources */,
 				08762255238F4F71002EF852 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

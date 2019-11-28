@@ -8,6 +8,7 @@
 
 #import "FeedViewController.h"
 #import "FeedView.h"
+#import "FeedItemCell.h"
 
 @interface FeedViewController ()
 
@@ -28,7 +29,27 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [_myView setTitle:@"hello world"];
+    [_myView.collectionView registerClass:[FeedItemCell class] forCellWithReuseIdentifier:@"feedItemCell"];
+    _myView.collectionView.dataSource = self;
+    _myView.collectionView.delegate = self;
+
+    [_myView.collectionView reloadData];
+}
+
+// MARK: - <UICollectionViewDataSource>
+- (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    FeedItemCell *feedItemCell = [_myView.collectionView dequeueReusableCellWithReuseIdentifier:@"feedItemCell" forIndexPath:indexPath];
+    [feedItemCell setTitle:@"test 123"];
+    return feedItemCell;
+}
+
+- (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return 2;
+}
+
+// MARK: - <UICollectionViewDelegateFlowLayout>
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    return CGSizeMake(100, 100);
 }
 
 @end
