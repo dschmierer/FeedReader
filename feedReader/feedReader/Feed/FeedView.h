@@ -1,15 +1,21 @@
 //
-//  ViewController.h
+//  FeedView.h
 //  feedReader
 //
 //  Created by David Schmierer on 11/27/19.
 //  Copyright © 2019 David Schmierer. All rights reserved.
 //
 
+#ifndef FeedView_h
+#define FeedView_h
+
+
+#endif /* FeedView_h */
+
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface FeedView : UIView
 
+- (void)setTitle:(NSString *)title;
 
 @end
-

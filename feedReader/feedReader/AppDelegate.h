@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FeedViewController.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
+
+@property (strong, readonly, nonatomic) UIWindow *window;
 
 
 @end
