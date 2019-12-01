@@ -14,6 +14,8 @@
 		08762255238F4F71002EF852 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 08762254238F4F71002EF852 /* main.m */; };
 		0876225C238F5186002EF852 /* FeedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0876225B238F5186002EF852 /* FeedView.m */; };
 		08762264238FAE12002EF852 /* FeedItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08762263238FAE12002EF852 /* FeedItemCell.m */; };
+		0876226623930C95002EF852 /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0876226523930C95002EF852 /* XMLReader.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		087622682393119B002EF852 /* XMLReader.h in Sources */ = {isa = PBXBuildFile; fileRef = 0876226723930CB2002EF852 /* XMLReader.h */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 		0876225D238F5260002EF852 /* FeedView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FeedView.h; sourceTree = "<group>"; };
 		08762262238FADB0002EF852 /* FeedItemCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FeedItemCell.h; sourceTree = "<group>"; };
 		08762263238FAE12002EF852 /* FeedItemCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FeedItemCell.m; sourceTree = "<group>"; };
+		0876226523930C95002EF852 /* XMLReader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = XMLReader.m; path = feedReader/XMLReader.m; sourceTree = SOURCE_ROOT; };
+		0876226723930CB2002EF852 /* XMLReader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XMLReader.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +68,8 @@
 			children = (
 				08762242238F4F6D002EF852 /* AppDelegate.h */,
 				08762243238F4F6D002EF852 /* AppDelegate.m */,
+				0876226723930CB2002EF852 /* XMLReader.h */,
+				0876226523930C95002EF852 /* XMLReader.m */,
 				08762261238FA11A002EF852 /* Feed */,
 				0876224E238F4F71002EF852 /* Assets.xcassets */,
 				08762250238F4F71002EF852 /* LaunchScreen.storyboard */,
@@ -159,6 +165,8 @@
 				0876225C238F5186002EF852 /* FeedView.m in Sources */,
 				08762244238F4F6D002EF852 /* AppDelegate.m in Sources */,
 				08762264238FAE12002EF852 /* FeedItemCell.m in Sources */,
+				087622682393119B002EF852 /* XMLReader.h in Sources */,
+				0876226623930C95002EF852 /* XMLReader.m in Sources */,
 				08762255238F4F71002EF852 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

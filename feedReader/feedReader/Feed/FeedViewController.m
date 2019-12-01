@@ -9,10 +9,12 @@
 #import "FeedViewController.h"
 #import "FeedView.h"
 #import "FeedItemCell.h"
+#import "XMLReader.h"
 
 @interface FeedViewController ()
 
 @property (nonatomic, strong) FeedView *myView;
+@property (nonatomic, strong) NSArray *feedItems;
 
 @end
 
@@ -32,8 +34,33 @@
     [_myView.collectionView registerClass:[FeedItemCell class] forCellWithReuseIdentifier:@"feedItemCell"];
     _myView.collectionView.dataSource = self;
     _myView.collectionView.delegate = self;
+    [self loadData];
+}
 
-    [_myView.collectionView reloadData];
+- (void)loadData {
+    NSString *feedUrl = @"https://www.personalcapital.com/blog/feed/?cat=3%2C891%2C890%2C68%2C284";
+    NSURL *url = [NSURL URLWithString:feedUrl];
+
+    __weak FeedViewController *weakSelf = self;
+    NSURLSessionDataTask *downloadTask = [[NSURLSession sharedSession]
+      dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        weakSelf.feedItems = [weakSelf getFeedItems:[XMLReader dictionaryForXMLData:data error:&error]];
+        NSLog(@"Fetched %lu feed items", weakSelf.feedItems.count);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [weakSelf.myView.collectionView reloadData];
+        });
+    }];
+
+    [downloadTask resume];
+}
+
+- (NSArray *)getFeedItems:(NSDictionary *)feedData {
+    id feedItems = [[[feedData objectForKey:@"rss"] objectForKey:@"channel"] objectForKey:@"item"];
+    if ([feedItems isKindOfClass:[NSArray class]]) {
+        return feedItems;
+    }
+    NSLog(@"Error: Unable to get feed items from feed data");
+    return [NSArray array];
 }
 
 // MARK: - <UICollectionViewDataSource>
@@ -44,7 +71,7 @@
 }
 
 - (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 2;
+    return _feedItems == nil ? 0 : _feedItems.count;
 }
 
 // MARK: - <UICollectionViewDelegateFlowLayout>
