@@ -10,10 +10,12 @@
 
 @interface FeedItemCell ()
 
+@property (nonatomic, strong) FeedItem *feedItem;
 @property (nonatomic, strong) UIStackView *containerStackView;
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UITextView *textView;
+@property (nonatomic, strong) UIActivityIndicatorView *imageLoadingSpinner;
 
 @end
 
@@ -41,6 +43,7 @@
     [self setupImageView];
     [self setupTitleLabel];
     [self setupTextView];
+    [self setupImageLoadingSpinner];
 }
 
 - (void)setupContainerStackView {
@@ -60,6 +63,13 @@
 
 - (void)setupTextView {
     _textView = [[UITextView alloc] init];
+    [_textView setEditable:false];
+}
+
+- (void)setupImageLoadingSpinner {
+    _imageLoadingSpinner = [[UIActivityIndicatorView alloc] initWithFrame:CGRectZero];
+    _imageLoadingSpinner.translatesAutoresizingMaskIntoConstraints = false;
+    [_imageLoadingSpinner setHidesWhenStopped:true];
 }
 
 - (void)setupLayer {
@@ -67,10 +77,12 @@
     [_containerStackView addArrangedSubview:_imageView];
     [_containerStackView addArrangedSubview:_titleLabel];
     [_containerStackView addArrangedSubview:_textView];
+    [_imageView addSubview:_imageLoadingSpinner];
 }
 
 - (void)setupConstraints {
     [self setupContainerStackViewConstraints];
+    [self setupImageLoadingSpinnerConstraints];
 }
 
 - (void)setupContainerStackViewConstraints {
@@ -80,18 +92,54 @@
     [self addConstraint:[NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_containerStackView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0]];
 }
 
+- (void)setupImageLoadingSpinnerConstraints {
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:_imageView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_imageLoadingSpinner attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0]];
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:_imageView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_imageLoadingSpinner attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0]];
+}
+
+// MARK: - Override
+- (void)prepareForReuse {
+    _feedItem = nil;
+    _titleLabel.text = nil;
+    _textView.text = nil;
+    _imageView.image = nil;
+    [super prepareForReuse];
+}
+
+// MARK: - Helpers
+- (void)showImageLoading {
+    [_imageLoadingSpinner startAnimating];
+}
+
+- (void)hideImageLoading {
+    [_imageLoadingSpinner stopAnimating];
+}
+
 // MARK: - Public
+- (void)setFeedItem:(FeedItem *)feedItem {
+    _feedItem = feedItem;
+    _feedItem.delegate = self;
 
-- (void)setImageUrl:(NSURL *)imageUrl {
-    _imageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:imageUrl]];
+    _titleLabel.text = feedItem.itemTitle;
+    _textView.text = feedItem.itemDescription;
+
+    if (feedItem.imageReady) {
+        _imageView.image = feedItem.itemImage;
+        [self hideImageLoading];
+    } else {
+        [self showImageLoading];
+        [feedItem loadImageIfNeeded];
+    }
 }
 
-- (void)setTitle:(NSString *)title {
-    _titleLabel.text = title;
+- (void)setDescriptionHidden:(BOOL)isHidden {
+    [_textView setHidden:isHidden];
 }
 
-- (void)setText:(NSString *)text {
-    _textView.text = text;
+// MARK: - <FeedItemDelegate>
+- (void)feedItem:(id)feedItem imageDidLoad:(UIImage *)image {
+    _imageView.image = image;
+    [self hideImageLoading];
 }
 
 @end

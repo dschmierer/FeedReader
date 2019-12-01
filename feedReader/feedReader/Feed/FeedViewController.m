@@ -9,6 +9,7 @@
 #import "FeedViewController.h"
 #import "FeedView.h"
 #import "FeedItemCell.h"
+#import "FeedItem.h"
 #import "XMLReader.h"
 
 @interface FeedViewController ()
@@ -70,19 +71,59 @@
     [self loadData:false];
 }
 
-- (NSArray *)getFeedItems:(NSDictionary *)feedData {
-    id feedItems = [[[feedData objectForKey:@"rss"] objectForKey:@"channel"] objectForKey:@"item"];
-    if ([feedItems isKindOfClass:[NSArray class]]) {
+- (nullable NSArray *)getFeedItems:(NSDictionary *)feedData {
+    id feedItemDatas = [[[feedData objectForKey:@"rss"] objectForKey:@"channel"] objectForKey:@"item"];
+    if ([feedItemDatas isKindOfClass:[NSArray class]]) {
+        NSMutableArray *feedItems = [NSMutableArray arrayWithCapacity:[feedItemDatas count]];
+        for (int i=0; i<[feedItemDatas count]; i++) {
+            if ([feedItemDatas[i] isKindOfClass:[NSDictionary class]]) {
+                FeedItem *feedItem = [[FeedItem alloc] initWithDict:feedItemDatas[i]];
+                [feedItems addObject:feedItem];
+            } else {
+                NSLog(@"Error: Invalid feed item at index %d", i);
+            }
+        }
         return feedItems;
     }
     NSLog(@"Error: Unable to get feed items from feed data");
-    return [NSArray array];
+    return nil;
+}
+
+- (nullable FeedItem *)getFeedItemForIndexPath:(NSIndexPath *) indexPath {
+    if (_feedItems == nil || _feedItems.count == 0) {
+        return nil;
+    }
+
+    id feedItem = nil;
+    if (indexPath.section == 0) {
+        feedItem = _feedItems[0];
+    } else if (indexPath.row + 1 < _feedItems.count) {
+        feedItem = _feedItems[indexPath.row + 1];
+    }
+
+    return feedItem;
+}
+
+- (void)configureFeedItemCell:(FeedItemCell *)cell indexPath:(NSIndexPath *)indexPath {
+    FeedItem *feedItem = [self getFeedItemForIndexPath:indexPath];
+
+    if (feedItem == nil) {
+        return;
+    }
+
+    [cell setFeedItem:feedItem];
+
+    if (indexPath.section == 0) {
+        [cell setDescriptionHidden:false];
+    } else{
+        [cell setDescriptionHidden:true];
+    }
 }
 
 // MARK: - <UICollectionViewDataSource>
 - (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
     FeedItemCell *feedItemCell = [_myView.collectionView dequeueReusableCellWithReuseIdentifier:@"feedItemCell" forIndexPath:indexPath];
-    [feedItemCell setTitle:@"test 123"];
+    [self configureFeedItemCell:feedItemCell indexPath:indexPath];
     return feedItemCell;
 }
 

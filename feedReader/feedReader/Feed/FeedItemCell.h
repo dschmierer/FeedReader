@@ -6,19 +6,15 @@
 //  Copyright © 2019 David Schmierer. All rights reserved.
 //
 
-#ifndef FeedItemCell_h
-#define FeedItemCell_h
-
-
-#endif /* FeedItemCell_h */
-
 #import <UIKit/UIKit.h>
+#import "FeedItem.h"
 
-@interface FeedItemCell : UICollectionViewCell
+@interface FeedItemCell : UICollectionViewCell<FeedItemDelegate>
 
-- (void)setImageUrl:(NSURL *)imageUrl;
-- (void)setTitle:(NSString *)title;
-- (void)setText:(NSString *)text;
+@property (readonly) FeedItem *feedItem;
+
+- (void)setFeedItem:(FeedItem *)feedItem;
+- (void)setDescriptionHidden:(BOOL)isHidden;
 
 @end
 

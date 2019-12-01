@@ -16,6 +16,7 @@
 		08762264238FAE12002EF852 /* FeedItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08762263238FAE12002EF852 /* FeedItemCell.m */; };
 		0876226623930C95002EF852 /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0876226523930C95002EF852 /* XMLReader.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		087622682393119B002EF852 /* XMLReader.h in Sources */ = {isa = PBXBuildFile; fileRef = 0876226723930CB2002EF852 /* XMLReader.h */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		0876226B23943BAA002EF852 /* FeedItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0876226A23943BAA002EF852 /* FeedItem.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,8 @@
 		08762263238FAE12002EF852 /* FeedItemCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FeedItemCell.m; sourceTree = "<group>"; };
 		0876226523930C95002EF852 /* XMLReader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = XMLReader.m; path = feedReader/XMLReader.m; sourceTree = SOURCE_ROOT; };
 		0876226723930CB2002EF852 /* XMLReader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XMLReader.h; sourceTree = "<group>"; };
+		0876226923943B9E002EF852 /* FeedItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FeedItem.h; sourceTree = "<group>"; };
+		0876226A23943BAA002EF852 /* FeedItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FeedItem.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +91,8 @@
 				0876225B238F5186002EF852 /* FeedView.m */,
 				08762262238FADB0002EF852 /* FeedItemCell.h */,
 				08762263238FAE12002EF852 /* FeedItemCell.m */,
+				0876226923943B9E002EF852 /* FeedItem.h */,
+				0876226A23943BAA002EF852 /* FeedItem.m */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -161,6 +166,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0876226B23943BAA002EF852 /* FeedItem.m in Sources */,
 				0876224A238F4F6D002EF852 /* FeedViewController.m in Sources */,
 				0876225C238F5186002EF852 /* FeedView.m in Sources */,
 				08762244238F4F6D002EF852 /* AppDelegate.m in Sources */,
