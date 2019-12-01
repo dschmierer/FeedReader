@@ -8,6 +8,9 @@
 
 #import "FeedView.h"
 
+static CGFloat const kCollectionViewItemSpacing = 10;
+static CGFloat const kCollectionViewInsetPadding = 10;
+
 @interface FeedView ()
 
 @property (nonatomic, strong)UIView *loadingView;
@@ -44,9 +47,13 @@
 }
 
 - (void)setupCollectionView {
-    _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
+    UICollectionViewFlowLayout *collectionViewLayout = [[UICollectionViewFlowLayout alloc] init];
+    [collectionViewLayout setMinimumInteritemSpacing:kCollectionViewItemSpacing];
+
+    _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:collectionViewLayout];
     _collectionView.backgroundColor = [UIColor whiteColor];
     _collectionView.translatesAutoresizingMaskIntoConstraints = false;
+    _collectionView.delegate = self;
 }
 
 - (void)setupLoadingView {
@@ -92,6 +99,34 @@
     [self addConstraint:[NSLayoutConstraint constraintWithItem:_loadingView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_loadingSpinner attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0]];
 }
 
+// MARK: - <UICollectionViewDelegateFlowLayout>
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0) {
+        return CGSizeMake(collectionView.frame.size.width, 50);
+    }
+    return [self sizeForItem:indexPath];
+}
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
+    if (section == 0) {
+        return UIEdgeInsetsZero;
+    } else {
+        return UIEdgeInsetsMake(kCollectionViewInsetPadding, kCollectionViewInsetPadding, kCollectionViewInsetPadding, kCollectionViewInsetPadding);
+    }
+}
+
+// MARK: - Helpers
+- (CGSize)sizeForItem:(NSIndexPath *)indexPath {
+    CGFloat itemsPerRow = 2;
+    if (indexPath.section == 0) {
+        itemsPerRow = 1;
+    }
+
+    CGFloat screenWidthLessInsets = _collectionView.frame.size.width - 2.0 * kCollectionViewInsetPadding;
+    CGFloat width = (screenWidthLessInsets - (itemsPerRow - 1) * kCollectionViewItemSpacing) / itemsPerRow;
+    CGFloat height = 50;
+    return CGSizeMake(width, height);
+}
 
 // MARK: - Public
 - (void)showLoading {

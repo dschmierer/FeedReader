@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FeedViewController : UIViewController<UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
+@interface FeedViewController : UIViewController<UICollectionViewDataSource>
 
 @end
 

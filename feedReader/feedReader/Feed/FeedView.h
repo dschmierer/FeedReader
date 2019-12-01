@@ -14,7 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FeedView : UIView
+@interface FeedView : UIView<UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, readonly, strong) UICollectionView *collectionView;
 

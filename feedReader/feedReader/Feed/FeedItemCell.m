@@ -36,7 +36,7 @@
 }
 
 - (void)setup {
-    self.backgroundColor = [UIColor whiteColor];
+    self.backgroundColor = [UIColor yellowColor];
     [self setupContainerStackView];
     [self setupImageView];
     [self setupTitleLabel];

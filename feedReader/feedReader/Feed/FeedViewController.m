@@ -35,7 +35,6 @@
     [self setupNavigationBar];
     [_myView.collectionView registerClass:[FeedItemCell class] forCellWithReuseIdentifier:@"feedItemCell"];
     _myView.collectionView.dataSource = self;
-    _myView.collectionView.delegate = self;
     [self loadData:true];
 }
 
@@ -87,13 +86,17 @@
     return feedItemCell;
 }
 
-- (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return _feedItems == nil ? 0 : _feedItems.count;
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return 2;
 }
 
-// MARK: - <UICollectionViewDelegateFlowLayout>
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake(100, 100);
+- (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    if (section == 0) {
+        // Treat most recent item as its own section
+        return _feedItems == nil ? 0 : 1;
+    } else {
+        return _feedItems == nil ? 0 : MAX(0, _feedItems.count - 1);
+    }
 }
 
 @end
