@@ -18,6 +18,7 @@
 
 @property (nonatomic, readonly, strong) UICollectionView *collectionView;
 
-//- (void)setTitle:(NSString *)title;
+- (void)showLoading;
+- (void)hideLoading;
 
 @end

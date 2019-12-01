@@ -34,10 +34,10 @@
     [_myView.collectionView registerClass:[FeedItemCell class] forCellWithReuseIdentifier:@"feedItemCell"];
     _myView.collectionView.dataSource = self;
     _myView.collectionView.delegate = self;
-    [self loadData];
+    [self loadData:true];
 }
 
-- (void)loadData {
+- (void)loadData:(BOOL)showLoading {
     NSString *feedUrl = @"https://www.personalcapital.com/blog/feed/?cat=3%2C891%2C890%2C68%2C284";
     NSURL *url = [NSURL URLWithString:feedUrl];
 
@@ -47,10 +47,14 @@
         weakSelf.feedItems = [weakSelf getFeedItems:[XMLReader dictionaryForXMLData:data error:&error]];
         NSLog(@"Fetched %lu feed items", weakSelf.feedItems.count);
         dispatch_async(dispatch_get_main_queue(), ^{
+            [weakSelf.myView hideLoading];
             [weakSelf.myView.collectionView reloadData];
         });
     }];
 
+    if (showLoading) {
+        [_myView showLoading];
+    }
     [downloadTask resume];
 }
 
