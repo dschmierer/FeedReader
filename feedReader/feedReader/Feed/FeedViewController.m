@@ -14,6 +14,7 @@
 @interface FeedViewController ()
 
 @property (nonatomic, strong) FeedView *myView;
+@property (nonatomic, strong) UIBarButtonItem *refreshButton;
 @property (nonatomic, strong) NSArray *feedItems;
 
 @end
@@ -31,10 +32,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setupNavigationBar];
     [_myView.collectionView registerClass:[FeedItemCell class] forCellWithReuseIdentifier:@"feedItemCell"];
     _myView.collectionView.dataSource = self;
     _myView.collectionView.delegate = self;
     [self loadData:true];
+}
+
+- (void)setupNavigationBar {
+    _refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshFeed)];
+    [self.navigationItem setRightBarButtonItem:_refreshButton];
 }
 
 - (void)loadData:(BOOL)showLoading {
@@ -47,6 +54,7 @@
         weakSelf.feedItems = [weakSelf getFeedItems:[XMLReader dictionaryForXMLData:data error:&error]];
         NSLog(@"Fetched %lu feed items", weakSelf.feedItems.count);
         dispatch_async(dispatch_get_main_queue(), ^{
+            [weakSelf.refreshButton setEnabled:true];
             [weakSelf.myView hideLoading];
             [weakSelf.myView.collectionView reloadData];
         });
@@ -56,6 +64,11 @@
         [_myView showLoading];
     }
     [downloadTask resume];
+}
+
+- (void)refreshFeed {
+    [_refreshButton setEnabled:false];
+    [self loadData:false];
 }
 
 - (NSArray *)getFeedItems:(NSDictionary *)feedData {
