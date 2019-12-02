@@ -63,10 +63,12 @@
     _imageView = [[UIImageView alloc] init];
     [_imageView setContentMode:UIViewContentModeScaleAspectFill];
     [_imageView setClipsToBounds:true];
+    _imageView.translatesAutoresizingMaskIntoConstraints = false;
 }
 
 - (void)setupBottomContainerView {
     _bottomContainerView = [[UIView alloc] init];
+    _bottomContainerView.translatesAutoresizingMaskIntoConstraints = false;
 }
 
 - (void)setupBottomStackView {
@@ -81,12 +83,14 @@
     _titleLabel.textColor = [UIColor blackColor];
     _titleLabel.numberOfLines = 0;
     _titleLabel.font = [UIFont systemFontOfSize:12 weight:UIFontWeightMedium];
+    _titleLabel.translatesAutoresizingMaskIntoConstraints = false;
 }
 
 - (void)setupDescriptionLabel {
     _descriptionLabel = [[UILabel alloc] init];
     _descriptionLabel.font = [UIFont systemFontOfSize:10 weight:UIFontWeightThin];
     _descriptionLabel.numberOfLines = 2;
+    _descriptionLabel.translatesAutoresizingMaskIntoConstraints = false;
 }
 
 - (void)setupImageLoadingSpinner {
@@ -107,27 +111,48 @@
 
 - (void)setupConstraints {
     [self setupContainerStackViewConstraints];
+    [self setupImageViewConstraints];
     [self setupImageLoadingSpinnerConstraints];
     [self setupBottomStackViewConstraints];
+    [self setupTitleLabelConstraints];
+    [self setupDescriptionLabelConstraints];
 }
 
 - (void)setupContainerStackViewConstraints {
+    // Pin edges to contentView
     [self addConstraint:[NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:_containerStackView attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0]];
     [self addConstraint:[NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:_containerStackView attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0.0]];
     [self addConstraint:[NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_containerStackView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0]];
     [self addConstraint:[NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_containerStackView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0]];
 }
 
+- (void)setupImageViewConstraints {
+    // Allow to compress
+    [_imageView setContentCompressionResistancePriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisVertical];
+}
+
 - (void)setupImageLoadingSpinnerConstraints {
+    // Center in imageView
     [self addConstraint:[NSLayoutConstraint constraintWithItem:_imageView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_imageLoadingSpinner attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0]];
     [self addConstraint:[NSLayoutConstraint constraintWithItem:_imageView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_imageLoadingSpinner attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0]];
 }
 
 - (void)setupBottomStackViewConstraints {
+    // Pin the bottomStackView to a containerView with some padding
     [self addConstraint:[NSLayoutConstraint constraintWithItem:_bottomContainerView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:_bottomStackView attribute:NSLayoutAttributeLeading multiplier:1.0 constant:-10.0]];
     [self addConstraint:[NSLayoutConstraint constraintWithItem:_bottomContainerView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:_bottomStackView attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:10.0]];
     [self addConstraint:[NSLayoutConstraint constraintWithItem:_bottomContainerView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_bottomStackView attribute:NSLayoutAttributeTop multiplier:1.0 constant:-5.0]];
     [self addConstraint:[NSLayoutConstraint constraintWithItem:_bottomContainerView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_bottomStackView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:5.0]];
+}
+
+- (void)setupTitleLabelConstraints {
+    // Height should match contentSize
+    [_titleLabel setContentHuggingPriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisVertical];
+}
+
+- (void)setupDescriptionLabelConstraints {
+    // Height should match contentSize
+    [_descriptionLabel setContentHuggingPriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisVertical];
 }
 
 // MARK: - Override
