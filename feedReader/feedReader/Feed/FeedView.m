@@ -44,6 +44,7 @@ static CGFloat const kFeedItemCellAspectRatio = 1.4;
 }
 
 - (void)setup {
+    self.backgroundColor = [UIColor whiteColor];
     [self setupCollectionView];
     [self setupLoadingView];
     [self setupLoadingSpinner];
@@ -60,13 +61,13 @@ static CGFloat const kFeedItemCellAspectRatio = 1.4;
 }
 
 - (void)setupLoadingView {
-    _loadingView = [[UIView alloc] initWithFrame:CGRectZero];
+    _loadingView = [[UIView alloc] init];
     _loadingView.backgroundColor = [UIColor whiteColor];
     _loadingView.translatesAutoresizingMaskIntoConstraints = false;
 }
 
 - (void)setupLoadingSpinner {
-    _loadingSpinner = [[UIActivityIndicatorView alloc] initWithFrame:CGRectZero];
+    _loadingSpinner = [[UIActivityIndicatorView alloc] init];
     _loadingSpinner.translatesAutoresizingMaskIntoConstraints = false;
     [_loadingSpinner setHidden:true];
 }
@@ -84,8 +85,9 @@ static CGFloat const kFeedItemCellAspectRatio = 1.4;
 }
 
 - (void)setupCollectionViewConstraints {
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:_collectionView attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0]];
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:_collectionView attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0.0]];
+    UILayoutGuide * guide = self.safeAreaLayoutGuide;
+    [self addConstraint:[_collectionView.leadingAnchor constraintEqualToAnchor:guide.leadingAnchor]];
+    [self addConstraint:[_collectionView.trailingAnchor constraintEqualToAnchor:guide.trailingAnchor]];
     [self addConstraint:[NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_collectionView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0]];
     [self addConstraint:[NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_collectionView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0]];
 }
