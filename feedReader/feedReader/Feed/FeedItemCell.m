@@ -157,7 +157,10 @@
 
 // MARK: - Override
 - (void)prepareForReuse {
-    _feedItem = nil;
+    if (_feedItem != nil) {
+        _feedItem.delegate = nil;
+        _feedItem = nil;
+    }
     _titleLabel.text = nil;
     _descriptionLabel.text = nil;
     _imageView.image = nil;
