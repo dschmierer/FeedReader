@@ -13,8 +13,10 @@
 @property (nonatomic, strong) FeedItem *feedItem;
 @property (nonatomic, strong) UIStackView *containerStackView;
 @property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic, strong) UIView *bottomContainerView;
+@property (nonatomic, strong) UIStackView *bottomStackView;
 @property (nonatomic, strong) UILabel *titleLabel;
-@property (nonatomic, strong) UITextView *textView;
+@property (nonatomic, strong) UILabel *descriptionLabel;
 @property (nonatomic, strong) UIActivityIndicatorView *imageLoadingSpinner;
 
 @end
@@ -38,11 +40,16 @@
 }
 
 - (void)setup {
-    self.backgroundColor = [UIColor yellowColor];
+    self.backgroundColor = [UIColor whiteColor];
+    self.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+    self.layer.borderWidth = 1.0;
+
     [self setupContainerStackView];
     [self setupImageView];
+    [self setupBottomContainerView];
+    [self setupBottomStackView];
     [self setupTitleLabel];
-    [self setupTextView];
+    [self setupDescriptionLabel];
     [self setupImageLoadingSpinner];
 }
 
@@ -54,16 +61,32 @@
 
 - (void)setupImageView {
     _imageView = [[UIImageView alloc] init];
+    [_imageView setContentMode:UIViewContentModeScaleAspectFill];
+    [_imageView setClipsToBounds:true];
+}
+
+- (void)setupBottomContainerView {
+    _bottomContainerView = [[UIView alloc] init];
+}
+
+- (void)setupBottomStackView {
+    _bottomStackView = [[UIStackView alloc] init];
+    _bottomStackView.translatesAutoresizingMaskIntoConstraints = false;
+    _bottomStackView.axis = UILayoutConstraintAxisVertical;
+    _bottomStackView.spacing = 2;
 }
 
 - (void)setupTitleLabel {
     _titleLabel = [[UILabel alloc] init];
     _titleLabel.textColor = [UIColor blackColor];
+    _titleLabel.numberOfLines = 0;
+    _titleLabel.font = [UIFont systemFontOfSize:12 weight:UIFontWeightMedium];
 }
 
-- (void)setupTextView {
-    _textView = [[UITextView alloc] init];
-    [_textView setEditable:false];
+- (void)setupDescriptionLabel {
+    _descriptionLabel = [[UILabel alloc] init];
+    _descriptionLabel.font = [UIFont systemFontOfSize:10 weight:UIFontWeightThin];
+    _descriptionLabel.numberOfLines = 2;
 }
 
 - (void)setupImageLoadingSpinner {
@@ -75,14 +98,17 @@
 - (void)setupLayer {
     [self.contentView addSubview:_containerStackView];
     [_containerStackView addArrangedSubview:_imageView];
-    [_containerStackView addArrangedSubview:_titleLabel];
-    [_containerStackView addArrangedSubview:_textView];
+    [_containerStackView addArrangedSubview:_bottomContainerView];
+    [_bottomContainerView addSubview:_bottomStackView];
+    [_bottomStackView addArrangedSubview:_titleLabel];
+    [_bottomStackView addArrangedSubview:_descriptionLabel];
     [_imageView addSubview:_imageLoadingSpinner];
 }
 
 - (void)setupConstraints {
     [self setupContainerStackViewConstraints];
     [self setupImageLoadingSpinnerConstraints];
+    [self setupBottomStackViewConstraints];
 }
 
 - (void)setupContainerStackViewConstraints {
@@ -97,11 +123,18 @@
     [self addConstraint:[NSLayoutConstraint constraintWithItem:_imageView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_imageLoadingSpinner attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0]];
 }
 
+- (void)setupBottomStackViewConstraints {
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:_bottomContainerView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:_bottomStackView attribute:NSLayoutAttributeLeading multiplier:1.0 constant:-10.0]];
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:_bottomContainerView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:_bottomStackView attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:10.0]];
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:_bottomContainerView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_bottomStackView attribute:NSLayoutAttributeTop multiplier:1.0 constant:-5.0]];
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:_bottomContainerView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_bottomStackView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:5.0]];
+}
+
 // MARK: - Override
 - (void)prepareForReuse {
     _feedItem = nil;
     _titleLabel.text = nil;
-    _textView.text = nil;
+    _descriptionLabel.text = nil;
     _imageView.image = nil;
     [super prepareForReuse];
 }
@@ -121,7 +154,7 @@
     _feedItem.delegate = self;
 
     _titleLabel.text = feedItem.itemTitle;
-    _textView.text = feedItem.itemDescription;
+    _descriptionLabel.text = feedItem.itemDescription;
 
     if (feedItem.imageReady) {
         _imageView.image = feedItem.itemImage;
@@ -133,7 +166,7 @@
 }
 
 - (void)setDescriptionHidden:(BOOL)isHidden {
-    [_textView setHidden:isHidden];
+    [_descriptionLabel setHidden:isHidden];
 }
 
 // MARK: - <FeedItemDelegate>

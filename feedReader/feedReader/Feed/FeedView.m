@@ -10,6 +10,7 @@
 
 static CGFloat const kCollectionViewItemSpacing = 10;
 static CGFloat const kCollectionViewInsetPadding = 10;
+static CGFloat const kFeedItemCellAspectRatio = 1.4;
 
 @interface FeedView ()
 
@@ -102,7 +103,8 @@ static CGFloat const kCollectionViewInsetPadding = 10;
 // MARK: - <UICollectionViewDelegateFlowLayout>
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        return CGSizeMake(collectionView.frame.size.width, 50);
+        CGFloat width = collectionView.frame.size.width;
+        return CGSizeMake(width, width / kFeedItemCellAspectRatio);
     }
     return [self sizeForItem:indexPath];
 }
@@ -124,7 +126,7 @@ static CGFloat const kCollectionViewInsetPadding = 10;
 
     CGFloat screenWidthLessInsets = _collectionView.frame.size.width - 2.0 * kCollectionViewInsetPadding;
     CGFloat width = (screenWidthLessInsets - (itemsPerRow - 1) * kCollectionViewItemSpacing) / itemsPerRow;
-    CGFloat height = 50;
+    CGFloat height = width / kFeedItemCellAspectRatio;
     return CGSizeMake(width, height);
 }
 
