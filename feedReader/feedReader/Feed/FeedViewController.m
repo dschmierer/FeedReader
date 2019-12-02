@@ -125,8 +125,10 @@
 
     if (indexPath.section == 0) {
         [cell setDescriptionHidden:false];
+        [cell setTitleLineCount:1];
     } else{
         [cell setDescriptionHidden:true];
+        [cell setTitleLineCount:2];
     }
 }
 

@@ -15,6 +15,7 @@
 
 - (void)setFeedItem:(FeedItem *)feedItem;
 - (void)setDescriptionHidden:(BOOL)isHidden;
+- (void)setTitleLineCount:(int)lineCount;
 
 @end
 

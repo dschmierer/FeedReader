@@ -162,6 +162,7 @@
         _feedItem = nil;
     }
     _titleLabel.text = nil;
+    _titleLabel.numberOfLines = 0;
     _descriptionLabel.text = nil;
     _imageView.image = nil;
     [super prepareForReuse];
@@ -195,6 +196,10 @@
 
 - (void)setDescriptionHidden:(BOOL)isHidden {
     [_descriptionLabel setHidden:isHidden];
+}
+
+- (void)setTitleLineCount:(int)lineCount {
+    [_titleLabel setNumberOfLines:lineCount];
 }
 
 // MARK: - <FeedItemDelegate>
