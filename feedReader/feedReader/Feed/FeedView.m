@@ -13,6 +13,7 @@ static CGFloat const kCollectionViewItemsPerRowTablet = 3;
 static CGFloat const kCollectionViewItemSpacing = 10;
 static CGFloat const kCollectionViewInsetPadding = 10;
 static CGFloat const kFeedItemCellAspectRatio = 1.4;
+static CGFloat const kFeedSectionHeaderHeight = 50;
 
 @interface FeedView ()
 
@@ -123,6 +124,13 @@ static CGFloat const kFeedItemCellAspectRatio = 1.4;
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     [_delegate feedView:self didSelect:indexPath];
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
+    if (section == 1) {
+        return CGSizeMake(collectionView.frame.size.width, kFeedSectionHeaderHeight);
+    }
+    return CGSizeZero;
 }
 
 // MARK: - Helpers

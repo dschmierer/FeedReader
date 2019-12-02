@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "FeedItem.h"
 #import "FeedItemCell.h"
+#import "FeedSectionHeader.h"
 #import "FeedView.h"
 #import "WebViewController.h"
 #import "XMLReader.h"

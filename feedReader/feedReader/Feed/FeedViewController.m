@@ -33,6 +33,7 @@
     [super viewDidLoad];
     [self setupNavigationBar];
     [_myView.collectionView registerClass:[FeedItemCell class] forCellWithReuseIdentifier:@"feedItemCell"];
+    [_myView.collectionView registerClass:[FeedSectionHeader class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"feedSectionHeader"];
     _myView.collectionView.dataSource = self;
     [self loadData:true];
 }
@@ -162,6 +163,15 @@
     FeedItemCell *feedItemCell = [_myView.collectionView dequeueReusableCellWithReuseIdentifier:@"feedItemCell" forIndexPath:indexPath];
     [self configureFeedItemCell:feedItemCell indexPath:indexPath];
     return feedItemCell;
+}
+
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+    if (kind == UICollectionElementKindSectionHeader && indexPath.section == 1) {
+        FeedSectionHeader *feedSectionHeader = [_myView.collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"feedSectionHeader" forIndexPath:indexPath];
+        [feedSectionHeader setTitle:@"Previous Articles"];
+        return feedSectionHeader;
+    }
+    return nil;
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
