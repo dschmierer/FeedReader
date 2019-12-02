@@ -33,7 +33,6 @@
         _itemDescription = [[[FeedItem getValueFrom:data primaryKey:@"description" secondaryKey: @"text"] stringByRemovingPercentEncoding] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         _itemDateStr = [[FeedItem getValueFrom:data primaryKey:@"pubDate" secondaryKey:@"text"] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         _itemUrlStr = [[[FeedItem getValueFrom:data primaryKey:@"link" secondaryKey:@"text"] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] stringByAppendingString:@"?displayMobileNavigation=0"];
-        NSLog(@"url string %@", _itemUrlStr);
         _itemUrl = [NSURL URLWithString:_itemUrlStr];
     }
     return self;

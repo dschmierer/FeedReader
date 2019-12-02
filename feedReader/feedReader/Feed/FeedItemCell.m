@@ -8,6 +8,11 @@
 
 #import "FeedItemCell.h"
 
+static CGFloat const kFeedItemTitleFontSizeHandset = 12;
+static CGFloat const kFeedItemTitleFontSizeTablet = 18;
+static CGFloat const kFeedItemDescriptionFontSizeHandset = 10;
+static CGFloat const kFeedItemDescriptionFontSizeTablet = 14;
+
 @interface FeedItemCell ()
 
 @property (nonatomic, strong) FeedItem *feedItem;
@@ -82,13 +87,15 @@
     _titleLabel = [[UILabel alloc] init];
     _titleLabel.textColor = [UIColor blackColor];
     _titleLabel.numberOfLines = 0;
-    _titleLabel.font = [UIFont systemFontOfSize:12 weight:UIFontWeightMedium];
+    CGFloat fontSize = UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPhone ? kFeedItemTitleFontSizeHandset : kFeedItemTitleFontSizeTablet;
+    _titleLabel.font = [UIFont systemFontOfSize:fontSize weight:UIFontWeightMedium];
     _titleLabel.translatesAutoresizingMaskIntoConstraints = false;
 }
 
 - (void)setupDescriptionLabel {
     _descriptionLabel = [[UILabel alloc] init];
-    _descriptionLabel.font = [UIFont systemFontOfSize:10 weight:UIFontWeightThin];
+    CGFloat fontSize = UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPhone ? kFeedItemDescriptionFontSizeHandset : kFeedItemDescriptionFontSizeTablet;
+    _descriptionLabel.font = [UIFont systemFontOfSize:fontSize weight:UIFontWeightThin];
     _descriptionLabel.numberOfLines = 2;
     _descriptionLabel.translatesAutoresizingMaskIntoConstraints = false;
 }

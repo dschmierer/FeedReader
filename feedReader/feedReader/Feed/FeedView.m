@@ -8,6 +8,8 @@
 
 #import "FeedView.h"
 
+static CGFloat const kCollectionViewItemsPerRowHandset = 2;
+static CGFloat const kCollectionViewItemsPerRowTablet = 3;
 static CGFloat const kCollectionViewItemSpacing = 10;
 static CGFloat const kCollectionViewInsetPadding = 10;
 static CGFloat const kFeedItemCellAspectRatio = 1.4;
@@ -123,7 +125,7 @@ static CGFloat const kFeedItemCellAspectRatio = 1.4;
 
 // MARK: - Helpers
 - (CGSize)sizeForItem:(NSIndexPath *)indexPath {
-    CGFloat itemsPerRow = 2;
+    CGFloat itemsPerRow = UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPhone ? kCollectionViewItemsPerRowHandset : kCollectionViewItemsPerRowTablet;
     if (indexPath.section == 0) {
         itemsPerRow = 1;
     }

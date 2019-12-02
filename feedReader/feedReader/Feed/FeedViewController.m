@@ -132,6 +132,16 @@
     }
 }
 
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+
+    __weak FeedViewController *weakSelf = self;
+    [coordinator animateAlongsideTransition:^(id  _Nonnull context) {
+        [weakSelf.myView.collectionView reloadData];
+    } completion:^(id  _Nonnull context) {
+    }];
+}
+
 // MARK: - <WebViewControllerDelegate>
 - (void)webViewControllerDonePressed:(id)webViewController {
     [[self presentedViewController] dismissViewControllerAnimated:true completion:nil];
