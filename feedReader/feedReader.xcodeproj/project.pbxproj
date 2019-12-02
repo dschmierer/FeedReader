@@ -17,6 +17,7 @@
 		0876226623930C95002EF852 /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0876226523930C95002EF852 /* XMLReader.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		087622682393119B002EF852 /* XMLReader.h in Sources */ = {isa = PBXBuildFile; fileRef = 0876226723930CB2002EF852 /* XMLReader.h */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		0876226B23943BAA002EF852 /* FeedItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0876226A23943BAA002EF852 /* FeedItem.m */; };
+		0876226E2394E654002EF852 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0876226D2394E654002EF852 /* WebViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,8 @@
 		0876226723930CB2002EF852 /* XMLReader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XMLReader.h; sourceTree = "<group>"; };
 		0876226923943B9E002EF852 /* FeedItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FeedItem.h; sourceTree = "<group>"; };
 		0876226A23943BAA002EF852 /* FeedItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FeedItem.m; sourceTree = "<group>"; };
+		0876226D2394E654002EF852 /* WebViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
+		0876226F2394E664002EF852 /* WebViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +77,7 @@
 				0876226723930CB2002EF852 /* XMLReader.h */,
 				0876226523930C95002EF852 /* XMLReader.m */,
 				08762261238FA11A002EF852 /* Feed */,
+				0876226C2394E638002EF852 /* Web */,
 				0876224E238F4F71002EF852 /* Assets.xcassets */,
 				08762250238F4F71002EF852 /* LaunchScreen.storyboard */,
 				08762253238F4F71002EF852 /* Info.plist */,
@@ -95,6 +99,15 @@
 				0876226A23943BAA002EF852 /* FeedItem.m */,
 			);
 			path = Feed;
+			sourceTree = "<group>";
+		};
+		0876226C2394E638002EF852 /* Web */ = {
+			isa = PBXGroup;
+			children = (
+				0876226F2394E664002EF852 /* WebViewController.h */,
+				0876226D2394E654002EF852 /* WebViewController.m */,
+			);
+			path = Web;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -170,6 +183,7 @@
 				0876224A238F4F6D002EF852 /* FeedViewController.m in Sources */,
 				0876225C238F5186002EF852 /* FeedView.m in Sources */,
 				08762244238F4F6D002EF852 /* AppDelegate.m in Sources */,
+				0876226E2394E654002EF852 /* WebViewController.m in Sources */,
 				08762264238FAE12002EF852 /* FeedItemCell.m in Sources */,
 				087622682393119B002EF852 /* XMLReader.h in Sources */,
 				0876226623930C95002EF852 /* XMLReader.m in Sources */,

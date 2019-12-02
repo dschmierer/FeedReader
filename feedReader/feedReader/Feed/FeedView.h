@@ -6,17 +6,18 @@
 //  Copyright © 2019 David Schmierer. All rights reserved.
 //
 
-#ifndef FeedView_h
-#define FeedView_h
-
-
-#endif /* FeedView_h */
-
 #import <UIKit/UIKit.h>
+
+@protocol FeedViewDelegate <NSObject>
+
+- (void)feedView:(id)feedView didSelect:(NSIndexPath *)indexPath;
+
+@end
 
 @interface FeedView : UIView<UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, readonly, strong) UICollectionView *collectionView;
+@property (nonatomic, weak) id <FeedViewDelegate> delegate;
 
 - (void)showLoading;
 - (void)hideLoading;

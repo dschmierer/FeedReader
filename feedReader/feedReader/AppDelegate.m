@@ -11,7 +11,7 @@
 @interface AppDelegate ()
 
 @property (strong, readwrite, nonatomic) UIWindow *window;
-@property (nonatomic, strong) IBOutlet UINavigationController *navigationController;
+@property (nonatomic, strong) UINavigationController *navigationController;
 
 @end
 

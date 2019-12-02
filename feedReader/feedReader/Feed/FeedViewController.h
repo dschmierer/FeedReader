@@ -7,8 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FeedItem.h"
+#import "FeedItemCell.h"
+#import "FeedView.h"
+#import "WebViewController.h"
+#import "XMLReader.h"
 
-@interface FeedViewController : UIViewController<UICollectionViewDataSource>
+@interface FeedViewController : UIViewController<UICollectionViewDataSource, FeedViewDelegate, WebViewControllerDelegate>
 
 @end
 

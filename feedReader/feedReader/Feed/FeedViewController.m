@@ -7,10 +7,7 @@
 //
 
 #import "FeedViewController.h"
-#import "FeedView.h"
-#import "FeedItemCell.h"
-#import "FeedItem.h"
-#import "XMLReader.h"
+#import <SafariServices/SafariServices.h>
 
 @interface FeedViewController ()
 
@@ -28,6 +25,7 @@
     CGFloat screenHeight = screenRect.size.height;
 
     _myView = [[FeedView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
+    _myView.delegate = self;
     self.view = _myView;
 }
 
@@ -118,6 +116,26 @@
     } else{
         [cell setDescriptionHidden:true];
     }
+}
+
+// MARK: - <WebViewControllerDelegate>
+- (void)webViewControllerDonePressed:(id)webViewController {
+    [[self presentedViewController] dismissViewControllerAnimated:true completion:nil];
+}
+
+// MARK: - <FeedViewDelegate>
+- (void)feedView:(id)feedView didSelect:(NSIndexPath *)indexPath {
+    FeedItem *feedItem = [self getFeedItemForIndexPath:indexPath];
+
+    if (feedItem == nil) {
+        return;
+    }
+
+    WebViewController *vc = [[WebViewController alloc] initWithURL:feedItem.itemUrl title:feedItem.itemTitle];
+    vc.delegate = self;
+    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:vc];
+    nvc.modalPresentationStyle = UIModalPresentationFullScreen;
+    [self.navigationController presentViewController:nvc animated:true completion:nil];
 }
 
 // MARK: - <UICollectionViewDataSource>

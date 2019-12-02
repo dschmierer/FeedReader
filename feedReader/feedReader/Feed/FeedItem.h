@@ -20,8 +20,7 @@
 @property (readonly) UIImage *itemImage;
 @property (readonly) NSString *itemTitle;
 @property (readonly) NSString *itemDescription;
-//@property (readonly) NSDate *itemDate;
-//@property (readonly) NSURL *itemLink;
+@property (readonly) NSURL *itemUrl;
 
 @property (nonatomic, weak) id <FeedItemDelegate> delegate;
 

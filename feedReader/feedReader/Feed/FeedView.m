@@ -117,6 +117,10 @@ static CGFloat const kFeedItemCellAspectRatio = 1.4;
     }
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    [_delegate feedView:self didSelect:indexPath];
+}
+
 // MARK: - Helpers
 - (CGSize)sizeForItem:(NSIndexPath *)indexPath {
     CGFloat itemsPerRow = 2;
