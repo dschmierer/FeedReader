@@ -49,9 +49,11 @@
     __weak FeedViewController *weakSelf = self;
     NSURLSessionDataTask *downloadTask = [[NSURLSession sharedSession]
       dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        weakSelf.feedItems = [weakSelf getFeedItems:[XMLReader dictionaryForXMLData:data error:&error]];
+        NSDictionary *feedData = [XMLReader dictionaryForXMLData:data error:&error];
+        weakSelf.feedItems = [weakSelf getFeedItems:feedData];
         NSLog(@"Fetched %lu feed items", weakSelf.feedItems.count);
         dispatch_async(dispatch_get_main_queue(), ^{
+            weakSelf.title = [weakSelf getFeedTitle:feedData];
             [weakSelf.refreshButton setEnabled:true];
             [weakSelf.myView hideLoading];
             [weakSelf.myView.collectionView reloadData];
@@ -85,6 +87,16 @@
     }
     NSLog(@"Error: Unable to get feed items from feed data");
     return nil;
+}
+
+- (NSString *)getFeedTitle:(NSDictionary *)feedData {
+    id feedTitle = [[[[feedData objectForKey:@"rss"] objectForKey:@"channel"] objectForKey:@"title"] objectForKey:@"text"];
+
+    if ([feedTitle isKindOfClass:[NSString class]]) {
+        return [[feedTitle stringByRemovingPercentEncoding] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    }
+    NSLog(@"Error: Unable to get feed title from feed data");
+    return @"";
 }
 
 - (nullable FeedItem *)getFeedItemForIndexPath:(NSIndexPath *) indexPath {
